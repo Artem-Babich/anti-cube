@@ -12,6 +12,6 @@
     "styled-components": "5.2.1"
   },
   "scripts": {
-    "prepare": "echo || exit 0"
+    "prepare": "tsc"
   }
 }

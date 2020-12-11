@@ -18,7 +18,7 @@
     "resolveJsonModule": true,
     "noUncheckedIndexedAccess": true,
     "composite": true,
-    "types": ["node", "react", "react-dom", "redux", "react-redux", "dom"],
+    "types": ["node", "react", "react-dom", "redux", "react-redux", "react-router-dom"],
     "jsx": "react"
   }
 }

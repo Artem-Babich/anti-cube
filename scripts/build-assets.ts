@@ -61,6 +61,9 @@ const main = async ({ name, production }: { name: string, production: string }) 
     assetsDirectories.map(async ({ assetDir, bundledAssetsDir }) => {
       const assetName = path.parse(assetDir).name
 
+      // TODO remove next line
+      if(assetName === 'app') { return }
+
       if (name != null && assetName !== name) {
         return
       }
@@ -71,10 +74,10 @@ const main = async ({ name, production }: { name: string, production: string }) 
         rimraf(path.join(assetDir, 'tsconfig.tsbuildinfo'))
       }
 
-      // await execSync(`yarn workspace ${assetName} run prepare`, {
-      //   cwd: monorepoDir,
-      //   stdio: 'inherit',
-      // })
+      await execSync(`yarn workspace ${assetName} run prepare`, {
+        cwd: monorepoDir,
+        stdio: 'inherit',
+      })
 
       await zipAsset(assetDir, bundledAssetsDir)
 

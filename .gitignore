@@ -4,3 +4,5 @@ vscode
 .vscode
 yarn-error.log
 .assets
+lib/
+tsconfig.tsbuildinfo
