@@ -2,41 +2,28 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { sync as rimraf } from 'rimraf'
 import { execSync } from 'child_process'
-import * as minimist from 'minimist'
-import * as archiver from 'archiver'
-
-const chalk = require('chalk')
+import minimist from 'minimist'
+import archiver from 'archiver'
+import chalk from "chalk"
 
 const monorepoDir = path.join(__dirname, '..')
 const assetsRootDir = path.join(monorepoDir, 'assets')
-const assetsStageDir = path.join(assetsRootDir, 'stage')
-const assetsVersionDir = path.join(assetsRootDir, 'version')
 const bundledAssetsRootDir = path.join(monorepoDir, '.assets')
-const bundledAssetsStageDir = path.join(bundledAssetsRootDir, 'stage')
-const bundledAssetsVersionDir = path.join(bundledAssetsRootDir, 'version')
 
-const assetsDirectories = [
-  ...fs.readdirSync(assetsStageDir).map((pathname) => ({
-    assetDir: path.join(assetsStageDir, pathname),
-    bundledAssetsDir: bundledAssetsStageDir,
-  })),
-  ...fs.readdirSync(assetsVersionDir).map((pathname) => ({
-    assetDir: path.join(assetsVersionDir, pathname),
-    bundledAssetsDir: bundledAssetsVersionDir,
-  })),
-]
+const assetsDirectories = fs.readdirSync(assetsRootDir).map((pathname) => ({
+  assetDir: path.join(assetsRootDir, pathname),
+  bundledAssetsDir: bundledAssetsRootDir,
+}))
   .filter(({ assetDir }) => fs.lstatSync(assetDir).isDirectory())
   .filter(({ assetDir }) => fs.existsSync(path.join(assetDir, 'package.json')))
 
-const safeName = (name) => `${name.replace(/@/, '').replace(/[/|\\]/g, '-')}.zip`
+const safeName = (name: string) => `${name.replace(/@/, '').replace(/[/|\\]/g, '-')}.zip`
 
 rimraf(bundledAssetsRootDir)
 
 fs.mkdirSync(bundledAssetsRootDir)
-fs.mkdirSync(bundledAssetsStageDir)
-fs.mkdirSync(bundledAssetsVersionDir)
 
-const zipAsset = async (assetDir, bundledAssetsDir) => {
+const zipAsset = async (assetDir: string, bundledAssetsDir: string) => {
   const assetPath = path.join(bundledAssetsDir, safeName(path.parse(assetDir).name))
 
   try {
@@ -69,7 +56,7 @@ const zipAsset = async (assetDir, bundledAssetsDir) => {
   )
 }
 
-const main = async ({ name, production }) => {
+const main = async ({ name, production }: { name: string, production: string }) => {
   await Promise.all(
     assetsDirectories.map(async ({ assetDir, bundledAssetsDir }) => {
       const assetName = path.parse(assetDir).name
@@ -84,10 +71,10 @@ const main = async ({ name, production }) => {
         rimraf(path.join(assetDir, 'tsconfig.tsbuildinfo'))
       }
 
-      await execSync(`yarn workspace ${assetName} run prepare`, {
-        cwd: monorepoDir,
-        stdio: 'inherit',
-      })
+      // await execSync(`yarn workspace ${assetName} run prepare`, {
+      //   cwd: monorepoDir,
+      //   stdio: 'inherit',
+      // })
 
       await zipAsset(assetDir, bundledAssetsDir)
 
@@ -96,6 +83,6 @@ const main = async ({ name, production }) => {
   )
 }
 
-main(minimist(process.argv.slice(2))).catch(() => {
+main(minimist(process.argv.slice(2)) as any).catch(() => {
   process.exit(1)
 })
