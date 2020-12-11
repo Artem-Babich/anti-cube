@@ -4,16 +4,18 @@ import { sync as rimraf } from 'rimraf'
 import { execSync } from 'child_process'
 import minimist from 'minimist'
 import archiver from 'archiver'
-import chalk from "chalk"
+import chalk from 'chalk'
 
 const monorepoDir = path.join(__dirname, '..')
 const assetsRootDir = path.join(monorepoDir, 'assets')
 const bundledAssetsRootDir = path.join(monorepoDir, '.assets')
 
-const assetsDirectories = fs.readdirSync(assetsRootDir).map((pathname) => ({
-  assetDir: path.join(assetsRootDir, pathname),
-  bundledAssetsDir: bundledAssetsRootDir,
-}))
+const assetsDirectories = fs
+  .readdirSync(assetsRootDir)
+  .map((pathname) => ({
+    assetDir: path.join(assetsRootDir, pathname),
+    bundledAssetsDir: bundledAssetsRootDir,
+  }))
   .filter(({ assetDir }) => fs.lstatSync(assetDir).isDirectory())
   .filter(({ assetDir }) => fs.existsSync(path.join(assetDir, 'package.json')))
 
@@ -56,13 +58,15 @@ const zipAsset = async (assetDir: string, bundledAssetsDir: string) => {
   )
 }
 
-const main = async ({ name, production }: { name: string, production: string }) => {
+const main = async ({ name, production }: { name: string; production: string }) => {
   await Promise.all(
     assetsDirectories.map(async ({ assetDir, bundledAssetsDir }) => {
       const assetName = path.parse(assetDir).name
 
       // TODO remove next line
-      if(assetName === 'app') { return }
+      if (assetName === 'app') {
+        return
+      }
 
       if (name != null && assetName !== name) {
         return
