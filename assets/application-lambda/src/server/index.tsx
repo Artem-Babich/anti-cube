@@ -1,11 +1,13 @@
+import * as fs from 'fs'
+import * as path from 'path'
 import * as React from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
 import getRoutes from '../common/getRoutes'
 import Routes from '../common/Routes'
+import createStore from '../common/redux/createStore'
 
 export const handler = async (event: any, context: any) => {
   const req = {
@@ -42,27 +44,51 @@ export const handler = async (event: any, context: any) => {
     },
   }
 
-  const routes = getRoutes()
-  const store = createStore(() => null)
-
-  const routerContext: { url?: string } = {}
-
-  const html = renderToString(
-    <Provider store={store}>
-      <StaticRouter location={req.url} context={routerContext}>
-        <Routes routes={routes} />
-      </StaticRouter>
-    </Provider>
-  )
-
-  if (context.url) {
-    res.setHeader('Location', context.url)
-    res.end()
+  if (req.url === '/client.js') {
+    res.setHeader('Content-Type', 'text/javascript')
+    res.end(fs.readFileSync(path.join(__dirname, '..', '..', 'dist', 'client.js')).toString('utf8'))
+  } else if (req.url === '/client.js.LICENSE.txt') {
+    res.setHeader('Content-Type', 'text/plain')
+    res.end(
+      fs
+        .readFileSync(path.join(__dirname, '..', '..', 'dist', 'client.js.LICENSE.txt'))
+        .toString('utf8')
+    )
   } else {
-    res.end(`
-      <!doctype html>
-      <div id="app-container">${html}</div>
-    `)
+    const routes = getRoutes()
+    const store = createStore()
+
+    const routerContext: { url?: string } = {}
+
+    const html = renderToString(
+      <Provider store={store}>
+        <StaticRouter location={req.url} context={routerContext}>
+          <Routes routes={routes} />
+        </StaticRouter>
+      </Provider>
+    )
+
+    if (context.url) {
+      res.setHeader('Location', context.url)
+      res.end()
+    } else {
+      res.end(`
+        <!doctype html>
+        <html>
+          <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <title>SberGram / СберФото</title>
+            <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+            <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+            <script crossorigin src="https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.min.js"></script>
+          </head>
+          <body>
+            <div id="app-container">${html}</div>
+            <script src="/client.js"></script>
+          </body>
+        </html>
+      `)
+    }
   }
 
   return output

@@ -11,6 +11,7 @@
     "react-router": "5.2.0"
   },
   "scripts": {
-    "prepare": "tsc"
+    "prepare": "webpack && tsc",
+    "webpack": "webpack"
   }
 }

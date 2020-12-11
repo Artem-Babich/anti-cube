@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
-    "target": "ES2018",
-    "lib": ["ES2018", "DOM"],
+    "module": "AMD",
+    "target": "ES5",
+    "lib": ["ES5", "DOM"],
     "rootDir": "src",
     "outDir": "lib",
     "strict": true,
@@ -15,7 +15,6 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "removeComments": false,
-    "resolveJsonModule": true,
     "noUncheckedIndexedAccess": true,
     "composite": true,
     "types": ["node", "react", "react-dom", "redux", "react-redux", "react-router-dom"],
