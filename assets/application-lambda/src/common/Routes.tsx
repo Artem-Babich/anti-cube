@@ -1,7 +1,13 @@
 import * as React from 'react'
 import { Route, Redirect, Switch } from 'react-router'
 
-const Routes = (props: { path?: string, component?: any, routes?: any, exact?: boolean, redirectTo?:string }) => {
+const Routes = (props: {
+  path?: string
+  component?: any
+  routes?: any
+  exact?: boolean
+  redirectTo?: string
+}) => {
   const { path, component: Component, routes, exact, redirectTo } = props
 
   if (redirectTo != null) {
