@@ -1,4 +1,4 @@
-exports.handler = async (event: any, context: any) => {
+export const handler = async (event: any, context: any) => {
   const req = {
     query: event.queryStringParameters,
     path: event.path,
