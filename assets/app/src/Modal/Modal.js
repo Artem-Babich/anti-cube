@@ -61,7 +61,7 @@ export function Modal({ match, history }) {
           bottom: 0,
           right: 25,
           height: 5000,
-          background: "rgba(0, 0, 0, 0.8)",
+          background: "rgba(0, 0, 0, 0.1)",
 
         }}
       >
