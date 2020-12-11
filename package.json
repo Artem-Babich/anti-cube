@@ -5,7 +5,8 @@
   "scripts": {
     "prepare": "yarn workspaces run prepare",
     "start": "cd assets/app && yarn start",
-    "build-assets": "ts-node scripts/build-assets.ts"
+    "build-assets": "ts-node scripts/build-assets.ts",
+    "prettier": "prettier --write \"**/**.{ts,tsx,js,json}\""
   },
   "dependencies": {
     "@types/node": "12.12.70",
