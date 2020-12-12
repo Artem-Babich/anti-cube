@@ -78,6 +78,10 @@ void (async () => {
     {
       username: 'mrcheater',
       avatarImageUrl: `https://scontent-frt3-2.cdninstagram.com/v/t51.2885-19/s150x150/45675925_523560148147503_5948854395897643008_n.jpg?_nc_ht=scontent-frt3-2.cdninstagram.com&_nc_ohc=sjSKwWsmf34AX8jiVz_&tp=1&oh=b440ffe2f7082ade850db99780872d95&oe=5FFDDAA0`
+    },
+    {
+      username: 'vladislav_forever',
+      avatarImageUrl: `https://scontent-frt3-2.cdninstagram.com/v/t51.2885-19/s150x150/45675925_523560148147503_5948854395897643008_n.jpg?_nc_ht=scontent-frt3-2.cdninstagram.com&_nc_ohc=sjSKwWsmf34AX8jiVz_&tp=1&oh=b440ffe2f7082ade850db99780872d95&oe=5FFDDAA0`
     }
   ].map(
     item => ({ ...item, passwordHash: md5(item.username) })
@@ -113,7 +117,7 @@ void (async () => {
   for(const { username } of users) {
     images.sort(()=>Math.random()>0.5 ? 1 : -1)
     for(const imageUrl of images) {
-      const postId = `${username}_post_${postIndex++}` 
+      const postId = `${username}_post_${postIndex++}`
       postsIds.push(postId)
       await executeStatement(`
         INSERT INTO ${schemaNameAsId}.${postsTableNameAsId} (
@@ -178,4 +182,16 @@ void (async () => {
     : ''
   }
 `))
+  console.log(
+    await executeStatement(`
+      SELECT *
+      FROM ${escapeId(schemaName)}.${escapeId(usersTableName)}
+    `)
+  )
+  console.log(
+    await executeStatement(`
+      SELECT *
+      FROM ${escapeId(schemaName)}.${escapeId(postsTableName)}
+    `)
+  )
 })()

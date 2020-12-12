@@ -1,5 +1,5 @@
 import App from './components/App'
-import NotFound from './pages/NotFound'
+import Gallery from './components/Gallery'
 
 const routes = [
   {
@@ -7,8 +7,9 @@ const routes = [
     component: App,
     routes: [
       {
-        component: NotFound,
-      },
+        path: '/',
+        component: Gallery
+      }
     ],
   },
 ]

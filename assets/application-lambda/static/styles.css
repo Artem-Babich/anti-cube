@@ -1,0 +1,220 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.gallery {
+  width: 200px;
+  height: 200px;
+  background: no-repeat center/170% url(/img/5.jpeg);
+  border-radius: 100px;
+  margin: 40px;
+}
+
+@media (max-width: 990px) {
+  .gallery {
+    margin: 20px;
+    width: 120px;
+    height: 120px;
+  }
+}
+
+.gallery--mini {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 293px);
+  justify-content: center;
+  gap: 20px;
+  grid-auto-rows: 293px;
+}
+
+@media (max-width: 990px) {
+  .photo-grid {
+    gap: 5px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: calc(33vw - 10px);
+  }
+}
+
+.link-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.tab-link {
+  text-decoration: none;
+  color: #ccc;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.tab-link:active {
+  color: black;
+}
+
+.image-link {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 150%;
+}
+
+.image-link:hover {
+  opacity: 0.7;
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 990px) {
+  .post-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-grid {
+  padding: 20px;
+  display: grid;
+  grid-template-rows: 60px auto;
+}
+
+.image-element {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
