@@ -27,14 +27,14 @@ const initTrie = (context: Context) => {
     .handle('GET', createDistFileHandler('client.js.LICENSE.txt', 'text/plain'))
   trie.define('/:markup*').handle('GET', markupHandler)
 
-  trie.define('/registration').handle('POST', registerHandler)
-  trie.define('/login').handle('POST', loginHandler)
-  trie.define('/explore').handle('GET', exploreHandler)
-  trie.define('/:userId').handle('GET', getPostsHandler)
-  trie.define('/:userId/upload').handle('GET', createUploadImageHandler(context))
-  trie.define('/:userId/posts').handle('POST', createPostHandler)
-  trie.define('/:userId/posts/:postId').handle('GET', getPostsHandler)
-  trie.define('/:userId/posts/:postId/like').handle('PUT', likeHandler)
+  trie.define('/auth/registration').handle('POST', registerHandler)
+  trie.define('/auth/login').handle('POST', loginHandler)
+  trie.define('/api/explore').handle('GET', exploreHandler)
+  trie.define('/api/:userId').handle('GET', getPostHandler)
+  trie.define('/api/:userId/upload').handle('GET', createUploadImageHandler(context))
+  trie.define('/api/:userId/posts').handle('POST', createPostHandler)
+  trie.define('/api/:userId/posts/:postId').handle('GET', getPostsHandler)
+  trie.define('/api/:userId/posts/:postId/like').handle('PUT', likeHandler)
 
   return trie
 }
