@@ -27,4 +27,5 @@ export type Request = {
   method: HttpMethod
   body: Record<string, any>
   params: Record<string, string>
+  headers: Record<string, string>
 }

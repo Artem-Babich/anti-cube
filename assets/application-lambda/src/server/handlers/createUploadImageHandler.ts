@@ -3,8 +3,11 @@ import * as crypto from 'crypto'
 import { v4 as uuidV4 } from 'uuid'
 
 import { Context, Request, Response } from '../types'
+import validateUserHandler from './validateUserHandler'
 
 const createUploadImageHandler = (context: Context) => async (req: Request, res: Response) => {
+  validateUserHandler(req, res)
+
   const { authToken } = context
   const { userId } = req.params
 
