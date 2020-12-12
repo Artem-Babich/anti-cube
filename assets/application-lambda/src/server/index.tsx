@@ -22,21 +22,14 @@ const initTrie = (context: Context) => {
     fixedPathRedirect: true,
     trailingSlashRedirect: true,
   })
-  trie.define('/styles.css').handle('GET', createStaticFileHandler('styles.css', 'text/css'))
-  trie.define('/client.js').handle('GET', createDistFileHandler('client.js', 'text/javascript'))
+  trie.define('/heart.png').handle('GET', createStaticFileHandler('heart.png', 'image/png'))
+  trie.define('/styles.css').handle('GET', createStaticFileHandler('styles.css', 'text/css', true))
+  trie
+    .define('/client.js')
+    .handle('GET', createDistFileHandler('client.js', 'text/javascript', true))
   trie
     .define('/client.js.LICENSE.txt')
     .handle('GET', createDistFileHandler('client.js.LICENSE.txt', 'text/plain'))
-
-  trie.define('/auth/registration').handle('POST', registerHandler)
-  trie.define('/auth/login').handle('POST', loginHandler)
-  trie.define('/api/explore').handle('GET', exploreHandler)
-  trie.define('/api/:userId').handle('GET', getPostsHandler)
-  trie.define('/api/:userId/upload').handle('GET', createUploadImageHandler(context))
-  trie.define('/api/:userId/posts').handle('POST', createPostHandler)
-  trie.define('/api/:userId/posts/:postId').handle('GET', getPostsHandler)
-  trie.define('/api/:userId/posts/:postId/like').handle('PUT', likeHandler)
-  trie.define('/:markup*').handle('GET', markupHandler)
 
   trie.define('/auth/registration').handle('POST', registerHandler)
   trie.define('/auth/login').handle('POST', loginHandler)
@@ -46,6 +39,8 @@ const initTrie = (context: Context) => {
   trie.define('/api/:userId/posts').handle('POST', createPostHandler)
   trie.define('/api/:userId/posts/:postId').handle('GET', getPostsHandler)
   trie.define('/api/:userId/posts/:postId/like').handle('PUT', likeHandler)
+
+  trie.define('/:markup*').handle('GET', markupHandler)
 
   return trie
 }

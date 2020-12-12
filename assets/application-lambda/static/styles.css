@@ -131,7 +131,7 @@ table {
 .gallery {
   width: 200px;
   height: 200px;
-  background: no-repeat center/170% url(/img/5.jpeg);
+  background: no-repeat center;
   border-radius: 100px;
   margin: 40px;
 }
@@ -217,4 +217,50 @@ table {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
+  position: relative;
 }
+
+.image-element__shadow {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.image-element__shadow:hover {
+  background-color: rgba(0,0,0,0.3);
+}
+
+.image-element__heart {
+  width: 23px;
+  height: 23px;
+  background-image: url("/heart.png");
+}
+
+.image-element__likes {
+  margin-left: 3px;
+}
+
+.image-element__info {
+  opacity: 0;
+  align-items: center;
+  color: #fff;
+  display: flex;
+  font-size: 16px;
+  font-weight: 600;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.image-element__shadow:hover .image-element__info {
+  opacity: 1;
+}
+

@@ -8,24 +8,32 @@ const Gallery = () => {
     `https://user-images.githubusercontent.com/5055654/101983499-6014dc80-3c8c-11eb-825c-e72b99f2dd1a.jpeg`,
     `https://user-images.githubusercontent.com/5055654/101983500-6014dc80-3c8c-11eb-91f9-7b24fc4ed8e0.jpeg`,
     `https://user-images.githubusercontent.com/5055654/101983501-60ad7300-3c8c-11eb-9ede-71d96bdcf02f.jpeg`,
-    `https://user-images.githubusercontent.com/5055654/101983502-60ad7300-3c8c-11eb-8f9f-aa8648f0fde7.jpeg`
+    `https://user-images.githubusercontent.com/5055654/101983502-60ad7300-3c8c-11eb-8f9f-aa8648f0fde7.jpeg`,
   ]
 
   return (
     <React.Fragment>
-      <div className='photo-grid'>
-        {images.map(
-          (imageUrl, index) => (
-            <div className='image-element' key={index} style={{
+      <div className="photo-grid">
+        {images.map((imageUrl, index) => (
+          <div
+            className="image-element"
+            key={index}
+            style={{
               backgroundImage: `url(${imageUrl})`,
-            }}/>
-          )
-        )}
+            }}
+          >
+            <div className="image-element__shadow">
+              <div className="image-element__info">
+                <div className="image-element__heart" />
+                <div className="image-element__likes">15</div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </React.Fragment>
   )
 }
-
 
 //
 // export class Gallery extends Component {

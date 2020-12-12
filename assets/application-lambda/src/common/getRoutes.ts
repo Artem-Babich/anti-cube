@@ -8,8 +8,8 @@ const routes = [
     routes: [
       {
         path: '/',
-        component: Gallery
-      }
+        component: Gallery,
+      },
     ],
   },
 ]
