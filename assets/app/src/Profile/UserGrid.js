@@ -7,7 +7,7 @@ const UserGridStyled = styled.div`
     justify-content:center;
     margin-top:80px;
     margin-bottom:50px;
-    gap; 15px;
+    gap: 15px;
     grid-template-areas: "photo name"
                          "photo label"
                          "photo description";
