@@ -8,7 +8,9 @@
     "redux": "4.0.5",
     "react-redux": "7.2.2",
     "react-router-dom": "5.2.0",
-    "react-router": "5.2.0"
+    "react-router": "5.2.0",
+    "route-trie": "3.0.0",
+    "jsonwebtoken": "8.5.1"
   },
   "scripts": {
     "prepare": "webpack && tsc",
