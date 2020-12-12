@@ -30,10 +30,10 @@ void (async () => {
   await executeStatement(`DROP TABLE IF EXISTS ${escapeId(schemaName)}.${escapeId(usersTableName)}`)
   await executeStatement(`
     CREATE TABLE ${escapeId(schemaName)}.${escapeId(usersTableName)} (
-      ${escapeId('userId')} VARCHAR(50) NOT NULL,
       ${escapeId('username')} VARCHAR(50) UNIQUE NOT NULL,
-      ${escapeId('password')} VARCHAR(50) NOT NULL,
-      PRIMARY KEY(${escapeId('userId')})
+      ${escapeId('passwordHash')} TEXT NOT NULL,
+      ${escapeId('avatarImageUrl')} TEXT NOT NULL,
+      PRIMARY KEY(${escapeId('username')})
     )
   `)
 
@@ -41,7 +41,7 @@ void (async () => {
   await executeStatement(`
     CREATE TABLE ${escapeId(schemaName)}.${escapeId(likesTableName)} (
       ${escapeId('postId')} VARCHAR(50) NOT NULL,
-      ${escapeId('userId')} VARCHAR(50) NOT NULL,
+      ${escapeId('username')} VARCHAR(50) NOT NULL,
       PRIMARY KEY(${escapeId('postId')})
     )
   `)
@@ -50,13 +50,26 @@ void (async () => {
   await executeStatement(`
     CREATE TABLE ${escapeId(schemaName)}.${escapeId(postsTableName)} (
       ${escapeId('postId')} VARCHAR(50) NOT NULL,
-      ${escapeId('userId')} VARCHAR(50) NOT NULL,
-      ${escapeId('imageUrl')} VARCHAR(50) NOT NULL,
+      ${escapeId('username')} VARCHAR(50) NOT NULL,
+      ${escapeId('imageUrl')} TEXT NOT NULL,
       ${escapeId('createdAt')} BIGINT NOT NULL,
       PRIMARY KEY(${escapeId('postId')})
     )
   `)
-  
+
+  // Insert users
+  await executeStatement(`
+    INSERT INTO ${escapeId(schemaName)}.${escapeId(usersTableName)} (
+      ${escapeId('username')}, 
+      ${escapeId('passwordHash')}, 
+      ${escapeId('avatarImageUrl')}
+    ) VALUES (
+      ${escapeStr('lykoi18')},
+      ${escapeStr('hash(lykoi18)')},
+      ${escapeStr(`https://scontent-frt3-2.cdninstagram.com/v/t51.2885-19/s150x150/110319607_4362037790503741_6784432024238052244_n.jpg?_nc_ht=scontent-frt3-2.cdninstagram.com&_nc_ohc=mGtY1z-ygoQAX99auz4&tp=1&oh=0f8bc51f81092ab7aa0a7f74203b73e4&oe=5FFCFD32`)}
+    )
+  `)
+
   console.log(
     await executeStatement(`
       SELECT *
