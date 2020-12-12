@@ -14,7 +14,7 @@ const wrapApiGatewayEvent = (event: {
     method: event.httpMethod,
     body: {} as any,
     params: {},
-  }
+  } as any
   try {
     req.body = JSON.parse(Buffer.from(event.body, 'base64').toString('utf8'))
   } catch {}

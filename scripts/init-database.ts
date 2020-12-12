@@ -150,19 +150,12 @@ void (async () => {
     }
   }
 
-  // console.log(
-  //   await executeStatement(`
-  //     SELECT *
-  //     FROM ${schemaNameAsId}.${usersTableNameAsId}
-  //   `)
-  // )
-
   const { currentUsername, targetUsername, skip, limit } : { currentUsername: string, targetUsername?: string, skip?: number, limit?: number } = {
     currentUsername: 'mrcheater',
     targetUsername: undefined,
     skip: 0,
-    limit: 30
-  } 
+    limit: 1
+  }
 
   console.log(await executeStatement(`
   SELECT (SELECT Count("likes1".*) FROM ${schemaNameAsId}.${likesTableNameAsId} "likes1"
@@ -185,6 +178,4 @@ void (async () => {
     : ''
   }
 `))
-
-
 })()
