@@ -64,6 +64,30 @@ void (async () => {
       ${escapeId('passwordHash')}, 
       ${escapeId('avatarImageUrl')}
     ) VALUES (
+      ${escapeStr('mrcheater')},
+      ${escapeStr('hash(mrcheater)')},
+      ${escapeStr(`https://scontent-frt3-2.cdninstagram.com/v/t51.2885-19/s150x150/45675925_523560148147503_5948854395897643008_n.jpg?_nc_ht=scontent-frt3-2.cdninstagram.com&_nc_ohc=sjSKwWsmf34AX8jiVz_&tp=1&oh=b440ffe2f7082ade850db99780872d95&oe=5FFDDAA0`)}
+    )
+  `)
+
+  await executeStatement(`
+    INSERT INTO ${escapeId(schemaName)}.${escapeId(usersTableName)} (
+      ${escapeId('username')}, 
+      ${escapeId('passwordHash')}, 
+      ${escapeId('avatarImageUrl')}
+    ) VALUES (
+      ${escapeStr('babich_artem')},
+      ${escapeStr('hash(babich_artem)')},
+      ${escapeStr(`https://user-images.githubusercontent.com/5055654/101983365-bb929a80-3c8b-11eb-8df9-64c3f16cb87f.jpg`)}
+    )
+  `)
+
+  await executeStatement(`
+    INSERT INTO ${escapeId(schemaName)}.${escapeId(usersTableName)} (
+      ${escapeId('username')}, 
+      ${escapeId('passwordHash')}, 
+      ${escapeId('avatarImageUrl')}
+    ) VALUES (
       ${escapeStr('lykoi18')},
       ${escapeStr('hash(lykoi18)')},
       ${escapeStr(`https://scontent-frt3-2.cdninstagram.com/v/t51.2885-19/s150x150/110319607_4362037790503741_6784432024238052244_n.jpg?_nc_ht=scontent-frt3-2.cdninstagram.com&_nc_ohc=mGtY1z-ygoQAX99auz4&tp=1&oh=0f8bc51f81092ab7aa0a7f74203b73e4&oe=5FFCFD32`)}
