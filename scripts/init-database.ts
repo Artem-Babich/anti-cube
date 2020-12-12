@@ -30,9 +30,14 @@ const executeStatement = async <T extends Record<string, any>>(sql: string): Pro
 const md5 = (text:string) => crypto.createHmac('md5', text).digest('hex')
 
 void (async () => {
-  await executeStatement(`DROP TABLE IF EXISTS ${escapeId(schemaName)}.${escapeId(usersTableName)}`)
+  const schemaNameAsId = escapeId(schemaName)
+  const postsTableNameAsId = escapeId(postsTableName)
+  const likesTableNameAsId = escapeId(likesTableName)
+  const usersTableNameAsId = escapeId(usersTableName)
+
+  await executeStatement(`DROP TABLE IF EXISTS ${schemaNameAsId}.${usersTableNameAsId}`)
   await executeStatement(`
-    CREATE TABLE ${escapeId(schemaName)}.${escapeId(usersTableName)} (
+    CREATE TABLE ${schemaNameAsId}.${usersTableNameAsId} (
       ${escapeId('username')} VARCHAR(50) UNIQUE NOT NULL,
       ${escapeId('passwordHash')} TEXT NOT NULL,
       ${escapeId('avatarImageUrl')} TEXT NOT NULL,
@@ -40,18 +45,19 @@ void (async () => {
     )
   `)
 
-  await executeStatement(`DROP TABLE IF EXISTS ${escapeId(schemaName)}.${escapeId(likesTableName)}`)
+  await executeStatement(`DROP TABLE IF EXISTS ${schemaNameAsId}.${likesTableNameAsId}`)
   await executeStatement(`
-    CREATE TABLE ${escapeId(schemaName)}.${escapeId(likesTableName)} (
+    CREATE TABLE ${schemaNameAsId}.${likesTableNameAsId} (
+      ${escapeId('likeId')} VARCHAR(50) NOT NULL,
       ${escapeId('postId')} VARCHAR(50) NOT NULL,
       ${escapeId('username')} VARCHAR(50) NOT NULL,
-      PRIMARY KEY(${escapeId('postId')})
+      PRIMARY KEY(${escapeId('likeId')})
     )
   `)
 
-  await executeStatement(`DROP TABLE IF EXISTS ${escapeId(schemaName)}.${escapeId(postsTableName)}`)
+  await executeStatement(`DROP TABLE IF EXISTS ${schemaNameAsId}.${postsTableNameAsId}`)
   await executeStatement(`
-    CREATE TABLE ${escapeId(schemaName)}.${escapeId(postsTableName)} (
+    CREATE TABLE ${schemaNameAsId}.${postsTableNameAsId} (
       ${escapeId('postId')} VARCHAR(50) NOT NULL,
       ${escapeId('username')} VARCHAR(50) NOT NULL,
       ${escapeId('imageUrl')} TEXT NOT NULL,
@@ -89,7 +95,7 @@ void (async () => {
   // Insert users
   for(const { username, passwordHash, avatarImageUrl } of users) {
     await executeStatement(`
-      INSERT INTO ${escapeId(schemaName)}.${escapeId(usersTableName)} (
+      INSERT INTO ${schemaNameAsId}.${usersTableNameAsId} (
         ${escapeId('username')}, 
         ${escapeId('passwordHash')}, 
         ${escapeId('avatarImageUrl')}
@@ -102,18 +108,21 @@ void (async () => {
   }
 
   // Insert posts
+  const postsIds = []
   let postIndex = 0
   for(const { username } of users) {
     images.sort(()=>Math.random()>0.5 ? 1 : -1)
     for(const imageUrl of images) {
+      const postId = `${username}_post_${postIndex++}` 
+      postsIds.push(postId)
       await executeStatement(`
-        INSERT INTO ${escapeId(schemaName)}.${escapeId(postsTableName)} (
+        INSERT INTO ${schemaNameAsId}.${postsTableNameAsId} (
           ${escapeId('postId')}, 
           ${escapeId('username')}, 
           ${escapeId('imageUrl')}, 
           ${escapeId('createdAt')}
         ) VALUES (
-          ${escapeStr(`${username}_post_${postIndex++}`)},
+          ${escapeStr(postId)},
           ${escapeStr(username)},
           ${escapeStr(imageUrl)},
           ${Date.now()}
@@ -122,10 +131,60 @@ void (async () => {
     }
   }
 
-  console.log(
-    await executeStatement(`
-      SELECT *
-      FROM ${escapeId(schemaName)}.${escapeId(usersTableName)}
-    `)
-  )
+  for(const postId of postsIds) {
+    const likedUsers = users.map(user => user.username)
+    likedUsers.sort(()=>Math.random()>0.5 ? 1 : -1)
+    likedUsers.splice(0, Math.floor(Math.random() * likedUsers.length))
+    for(const likedUser of likedUsers) {
+      await executeStatement(`
+        INSERT INTO ${schemaNameAsId}.${likesTableNameAsId} (
+          ${escapeId('likeId')}, 
+          ${escapeId('postId')}, 
+          ${escapeId('username')}
+        ) VALUES (
+          ${escapeStr(`${postId}_like_${likedUser}`)},
+          ${escapeStr(postId)},
+          ${escapeStr(likedUser)}
+        )
+      `)
+    }
+  }
+
+  // console.log(
+  //   await executeStatement(`
+  //     SELECT *
+  //     FROM ${schemaNameAsId}.${usersTableNameAsId}
+  //   `)
+  // )
+
+  const { currentUsername, targetUsername, skip, limit } : { currentUsername: string, targetUsername?: string, skip?: number, limit?: number } = {
+    currentUsername: 'mrcheater',
+    targetUsername: undefined,
+    skip: 0,
+    limit: 30
+  } 
+
+  console.log(await executeStatement(`
+  SELECT (SELECT Count("likes1".*) FROM ${schemaNameAsId}.${likesTableNameAsId} "likes1"
+  WHERE "likes1"."postId" = "posts"."postId") AS "likesCount",
+  (SELECT Count("likes2".*) FROM ${schemaNameAsId}.${likesTableNameAsId} "likes2"
+  WHERE "likes2"."username" = ${escapeStr(currentUsername)}
+  AND "likes2"."postId" = "posts"."postId") > 0 AS "isLiked",
+  "posts".* FROM ${schemaNameAsId}.${postsTableNameAsId} "posts"
+  ${targetUsername != null
+    ? `WHERE "posts"."username" = ${escapeStr(currentUsername)} `
+    : ''
+  }
+  ORDER BY "posts"."createdAt" DESC
+  ${skip != null && !isNaN(+skip)
+    ? `OFFSET ${+skip} `
+    : ''
+  }
+  ${limit != null && !isNaN(+limit)
+    ? `LIMIT ${+limit} `
+    : ''
+  }
+`))
+
+
 })()
