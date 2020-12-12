@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 import UserGrid from '../Profile/UserGrid'
 import Posts from '../Posts'
 import { Modal } from '../Modal/Modal'
-import PostEditForm from '../PostEditing/PostEditForm'
+
 import './Gallery.css'
 import CreatePostPanel from './CreatePostPanel'
 import PostViewer from '../PostViewer/PostViewer'

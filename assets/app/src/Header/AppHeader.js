@@ -6,15 +6,15 @@ function AppHeader() {
     <div className={'App-header'}>
       <div className={'logoContainer'}>
         <div>
-          <span className={'logo'}>Sbergram</span>
+          <span className={'logo'}>СберФото</span>
         </div>
       </div>
       <div className={'accountButtons'}>
         <div>
-          <span>Sign In</span>
+          <span>Вход</span>
         </div>
         <div>
-          <span>Sign Up</span>
+          <span>Регистрация</span>
         </div>
       </div>
     </div>
