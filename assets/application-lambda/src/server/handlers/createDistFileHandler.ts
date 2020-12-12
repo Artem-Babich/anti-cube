@@ -1,7 +1,7 @@
 import * as path from 'path'
 import * as fs from 'fs'
 
-import { Request, Response } from '../wrapApiGatewayEvent'
+import { Request, Response } from '../types'
 
 const createDistFileHandler = (fileName: string, contentType: string) => (
   req: Request,

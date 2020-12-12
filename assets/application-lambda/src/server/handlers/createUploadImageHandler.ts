@@ -2,8 +2,12 @@ import * as https from 'https'
 import * as crypto from 'crypto'
 import { v4 as uuidV4 } from 'uuid'
 
-exports.handler = async (event: { userId: string }, context: { authToken: string }) => {
-  const { userId } = event
+import { Context, Request, Response } from '../types'
+
+const createUploadImageHandler = (context: Context) => async (req: Request, res: Response) => {
+  const { authToken } = context
+  const { userId } = req.params
+
   const uploadId = uuidV4()
 
   const body = Buffer.from(
@@ -12,7 +16,7 @@ exports.handler = async (event: { userId: string }, context: { authToken: string
         identity: {
           methods: ['token'],
           token: {
-            id: context.authToken,
+            id: authToken,
             'duration-seconds': '900',
           },
         },
@@ -69,8 +73,10 @@ exports.handler = async (event: { userId: string }, context: { authToken: string
   hmac.update(stringToSign)
   const signature = hmac.digest('base64')
 
-  return {
+  res.json({
     uploadId,
     signature,
-  }
+  })
 }
+
+export default createUploadImageHandler

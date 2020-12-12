@@ -1,4 +1,4 @@
-import { Request, Response } from '../wrapApiGatewayEvent'
+import { Request, Response } from '../types'
 
 const failHandler = (req: Request, res: Response) => {
   res.status(500)

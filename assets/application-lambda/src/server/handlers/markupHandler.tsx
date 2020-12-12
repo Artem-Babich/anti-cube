@@ -7,7 +7,7 @@ import getRoutes from '../../common/getRoutes'
 import Routes from '../../common/Routes'
 import createStore from '../../common/redux/createStore'
 
-import { Request, Response } from '../wrapApiGatewayEvent'
+import { Request, Response } from '../types'
 
 const markupHandler = (req: Request, res: Response) => {
   const routes = getRoutes()
