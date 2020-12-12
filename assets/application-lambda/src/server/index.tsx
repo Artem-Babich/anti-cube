@@ -1,9 +1,16 @@
 import Trie from 'route-trie'
 
 import createDistFileHandler from './handlers/createDistFileHandler'
-import markupHandler from './handlers/markupHandler'
-import failHandler from './handlers/failHandler'
+import createPostHandler from './handlers/createPostHandler'
 import createUploadImageHandler from './handlers/createUploadImageHandler'
+import exploreHandler from './handlers/exploreHandler'
+import failHandler from './handlers/failHandler'
+import getPostHandler from './handlers/getPostHandler'
+import getPostsHandler from './handlers/getPostsHandler'
+import likeHandler from './handlers/likeHandler'
+import loginHandler from './handlers/loginHandler'
+import markupHandler from './handlers/markupHandler'
+import registerHandler from './handlers/registerHandler'
 
 import wrapApiGatewayEvent from './wrapApiGatewayEvent'
 import { Context } from './types'
@@ -19,7 +26,15 @@ const initTrie = (context: Context) => {
     .define('/client.js.LICENSE.txt')
     .handle('GET', createDistFileHandler('client.js.LICENSE.txt', 'text/plain'))
   trie.define('/:markup*').handle('GET', markupHandler)
+
+  trie.define('/registration').handle('POST', registerHandler)
+  trie.define('/login').handle('POST', loginHandler)
+  trie.define('/explore').handle('GET', exploreHandler)
+  trie.define('/:userId').handle('GET', getPostsHandler)
   trie.define('/:userId/upload').handle('GET', createUploadImageHandler(context))
+  trie.define('/:userId/posts').handle('POST', createPostHandler)
+  trie.define('/:userId/posts/:postId').handle('GET', getPostsHandler)
+  trie.define('/:userId/posts/:postId/like').handle('PUT', likeHandler)
 
   return trie
 }
