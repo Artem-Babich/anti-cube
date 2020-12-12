@@ -4,6 +4,10 @@ import styled, { css } from 'styled-components'
 import UserGrid from '../Profile/UserGrid'
 import Posts from '../Posts'
 import { Modal } from '../Modal/Modal'
+import PostEditForm from '../PostEditing/PostEditForm'
+import './Gallery.css'
+import CreatePostPanel from './CreatePostPanel'
+import PostViewer from '../PostViewer/PostViewer'
 
 const PhotoGrid = styled.div`
   display: grid;
@@ -25,56 +29,22 @@ const PhotoGrid = styled.div`
   }
 `
 
-const LinkGrid = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-`
-
-const TabLink = styled(Link)`
-  text-decoration: none;
-  color: #ccc;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  ${({ selected }) =>
-    selected &&
-    css`
-      color: black;
-    `}
-`
-
-const ImageLink = styled(Link)`
-  background: no-repeat center/150% url(/img/${({ index }) => index}.jpeg);
-  :hover {
-    opacity: 0.7;
-  }
-  ${({ isCascade }) =>
-    isCascade &&
-    css`
-      background-size: cover;
-      &:nth-of-type(2n) {
-        grid-row-start: span 2;
-      }
-    `}
-`
-
 class ImageElement extends Component {
+  imageUrl = null
+
   constructor(props) {
     super(props)
-    let imageUrl = props.imageUrl
-    this.divStyle = {
-      background: 'url(' + imageUrl + ') no-repeat center/150%',
-    }
+    this.imageUrl = props.imageUrl
+    // this.divStyle = {
+    //   background: 'url(' + imageUrl + ') no-repeat center/150%',
+    // }
   }
+
   render() {
     return (
-      <div
-        className="imageDivElement"
-        style={this.divStyle}
-        onClick={this.props.onImageClick}
-      ></div>
+      <div className="imageDivElement" onClick={this.props.onImageClick}>
+        <img src={this.imageUrl} className={'imageElementStyle'} />
+      </div>
     )
   }
 }
@@ -82,8 +52,9 @@ class ImageElement extends Component {
 export class Gallery extends Component {
   state = {
     isModalShown: false,
-    postId: 0,
+    postId: 1,
   }
+
   constructor() {
     super()
     this.showImageModal = this.showImageModal.bind(this)
@@ -96,6 +67,7 @@ export class Gallery extends Component {
     return (
       <React.Fragment>
         <UserGrid />
+        <CreatePostPanel></CreatePostPanel>
         <PhotoGrid isCascade={this.isCascade}>
           {Posts.map((post) => (
             <ImageElement
@@ -106,7 +78,10 @@ export class Gallery extends Component {
             ></ImageElement>
           ))}
         </PhotoGrid>
-        <Modal postId={this.state.postId} isModalShown={this.state.isModalShown}></Modal>
+        <Modal isModalShown={this.state.isModalShown}>
+          <PostViewer postId={this.state.postId}></PostViewer>
+        </Modal>
+        {/*<PostEditForm></PostEditForm>*/}
       </React.Fragment>
     )
   }

@@ -1,0 +1,33 @@
+.CreatePostPanelContainer{
+    position: relative;
+    left: 50%;
+    max-width: 919px;
+    height: 30px;
+    max-height: 500px;
+    transform: translate(-50%,-20px);
+    z-index: 500;
+    background-color: #e9e9ee;
+    border-radius: 15px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #c6c5c5;
+    text-align: left;
+}
+.CreatePostPanelContainer>span {
+    position: fixed;
+    justify-self: center;
+    margin-left: 15px;
+    margin-top: 5px;
+    color: #848486;
+    font-size: 15px;
+}
+.cameraIcon{
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    margin-top:2px;
+}
+.CreatePostPanelContainer:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
