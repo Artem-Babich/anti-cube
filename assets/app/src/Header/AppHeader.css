@@ -1,0 +1,44 @@
+.App-header {
+    position: fixed;
+    background-color: #282c34;
+    height: 54px;
+    width: 100%;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    top:0px;
+    z-index: 10000;
+}
+.logoContainer{
+    position: fixed;
+    font-size: 20px;
+    color:white;
+    top:0px;
+    left: 0px;
+}
+.logoContainer > div{
+    display: inline-block;
+    margin: 15px;
+}
+
+.logo{
+
+}
+.accountButtons {
+    position: fixed;
+    background-color: #282c34;
+    height: 54px;
+    font-size: 20px;
+    color: white;
+    top:0px;
+    right: 10px;
+    z-index: 10000;
+}
+.accountButtons>div{
+    display: inline-block;
+    margin: 15px;
+}
+.accountButtons>div:hover{
+    opacity: 0.9;
+    cursor: pointer;
+    color: #848486;
+}
