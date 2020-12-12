@@ -14,7 +14,23 @@ const wrapApiGatewayEvent = (event: {
     method: event.httpMethod,
     body: {} as any,
     params: {},
-  } as any
+    headers: {}
+  }
+  console.log(event)
+
+  try {
+    req.body = Buffer.from(event.body, 'base64').toString('utf8').split('&').reduce((acc: any, part: any) => {
+      let [key, ...value] = part
+        .split('=')
+        .map((i:any) => i.replace(/\+/g, ' '))
+        .map(decodeURIComponent)
+      value = value.join('=')
+
+      acc[key] = value
+      return acc
+    }, {})
+  } catch {}
+
   try {
     req.body = JSON.parse(Buffer.from(event.body, 'base64').toString('utf8'))
   } catch {}

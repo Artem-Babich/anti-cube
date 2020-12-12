@@ -22,7 +22,10 @@ const initTrie = (context: Context) => {
     fixedPathRedirect: true,
     trailingSlashRedirect: true,
   })
-  trie.define('/heart.png').handle('GET', createStaticFileHandler('heart.png', 'image/png'))
+  trie.define('/img/heart.png').handle('GET', createStaticFileHandler('heart.png', 'image/png'))
+  trie.define('/img/login.png').handle('GET', createStaticFileHandler('login.png', 'image/png'))
+  trie.define('/img/logout.png').handle('GET', createStaticFileHandler('logout.png', 'image/png'))
+  trie.define('/img/user.png').handle('GET', createStaticFileHandler('user.png', 'image/png'))
   trie.define('/styles.css').handle('GET', createStaticFileHandler('styles.css', 'text/css', true))
   trie
     .define('/client.js')

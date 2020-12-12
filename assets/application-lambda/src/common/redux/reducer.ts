@@ -1,4 +1,8 @@
-const reducer = (state: any = {}, action: any) => {
+const initialState = {
+  profile: null
+}
+
+const reducer = (state: any = initialState, action: any) => {
   return state
 }
 

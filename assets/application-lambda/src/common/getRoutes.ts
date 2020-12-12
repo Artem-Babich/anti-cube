@@ -1,5 +1,6 @@
 import App from './components/App'
 import Gallery from './components/Gallery'
+import Login from './components/Login'
 
 const routes = [
   {
@@ -9,6 +10,12 @@ const routes = [
       {
         path: '/',
         component: Gallery,
+        exact: true
+      },
+      {
+        path: '/login',
+        component: Login,
+        exact: true
       },
     ],
   },

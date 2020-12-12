@@ -128,6 +128,86 @@ table {
   border-spacing: 0;
 }
 
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+   background-color: #fafafa;
+}
+
+.application {
+  display: inline;
+}
+
+#app-container {
+  display: inline;
+}
+
+.header {
+  align-items: center;
+  height: 54px;
+  text-align: center;
+  background-color: #ffffff;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #dbdbdb;
+  margin-bottom: 10px;
+}
+
+.header__content {
+  height: 54px;
+  padding: 0 20px;
+  align-items: center;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 930px;
+  width: 100%;
+}
+
+.header__logo {
+  flex: 1 9999 0;
+  min-width: 40px;
+  font-size: 24px;
+  line-height: 54px;
+  text-align: left;
+  text-decoration: none;
+  color:#000000
+}
+
+.header__login {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url('/img/login.png');
+  background-size: contain;
+  cursor: pointer;
+  text-decoration: none;
+}
+.header__logout {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url('/img/logout.png');
+  background-size: contain;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.header__menu {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex: 1 0 0%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.header__menu_items {
+  display: flex;
+  flex-direction: row;
+  padding-left: 24px;
+  white-space: nowrap;
+}
+
 .gallery {
   width: 200px;
   height: 200px;
@@ -235,13 +315,13 @@ table {
 }
 
 .image-element__shadow:hover {
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .image-element__heart {
   width: 23px;
   height: 23px;
-  background-image: url("/heart.png");
+  background-image: url('/img/heart.png');
 }
 
 .image-element__likes {
@@ -263,4 +343,3 @@ table {
 .image-element__shadow:hover .image-element__info {
   opacity: 1;
 }
-

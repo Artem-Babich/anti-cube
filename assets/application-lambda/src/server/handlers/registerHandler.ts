@@ -7,7 +7,9 @@ import { escapeId, escapeStr, executeStatement, schemaName, usersTableName } fro
 const JWT_SECRET = process.env.JWT_SECRET
 
 const registerHandler = async (req: Request, res: Response) => {
-  const { login, password, avatarUrl } = req.body
+  const { login, password, avatarUrl = '/img/user.png' } = req.body
+
+  console.log(req.body)
 
   const [foundUser] = await executeStatement(`
     SELECT * FROM ${escapeId(schemaName)}.${escapeId(usersTableName)}

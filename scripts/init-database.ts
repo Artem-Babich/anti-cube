@@ -35,6 +35,7 @@ void (async () => {
   const likesTableNameAsId = escapeId(likesTableName)
   const usersTableNameAsId = escapeId(usersTableName)
 
+/*
   await executeStatement(`DROP TABLE IF EXISTS ${schemaNameAsId}.${usersTableNameAsId}`)
   await executeStatement(`
     CREATE TABLE ${schemaNameAsId}.${usersTableNameAsId} (
@@ -178,6 +179,10 @@ void (async () => {
   ${limit != null && !isNaN(+limit) ? `LIMIT ${+limit} ` : ''}
 `)
   )
+
+  */
+
+
   console.log(
     await executeStatement(`
       SELECT *
