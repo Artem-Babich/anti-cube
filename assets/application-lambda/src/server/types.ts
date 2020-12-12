@@ -16,6 +16,7 @@ export type Response = {
   status: (code: number) => Response
   redirect: (path: string, code?: number) => Response
   setHeader: (key: string, value: string) => Response
+  setCookie: (key: string, value: string) => Response
   enableBase64Encoded: () => Response
   disableBase64Encoded: () => Response
 }

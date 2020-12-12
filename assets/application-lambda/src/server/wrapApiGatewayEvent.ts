@@ -1,3 +1,5 @@
+import cookie from 'cookie'
+
 import { HttpMethod, Request, Response } from './types'
 
 const wrapApiGatewayEvent = (event: {
@@ -46,6 +48,10 @@ const wrapApiGatewayEvent = (event: {
     },
     setHeader(key, value) {
       res.INTERNAL.headers[key] = value
+      return res
+    },
+    setCookie(key, value) {
+      res.INTERNAL.headers['Set-Cookie'] = cookie.serialize(key, value)
       return res
     },
     enableBase64Encoded() {
